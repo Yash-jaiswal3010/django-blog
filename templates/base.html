@@ -10,6 +10,28 @@
     <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
     <link href="{% static 'css/blog.css'%}" rel="stylesheet">
+    <style>
+    .user-status {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 10px;
+        background: #f1f5f9;
+        border: 1px solid #d9e2ec;
+        border-radius: 6px;
+        color: #495057;
+        font-size: 14px;
+    }
+
+    .user-status strong {
+        color: #1f3a5f;
+        font-weight: 600;
+    }
+
+    .user-status .btn {
+        margin-left: 8px;
+    }
+</style>
   </head>
 <body>
     <div class="container">
@@ -27,8 +49,19 @@
             </form>
           </div>
           <div class="col-4 d-flex justify-content-end align-items-center">
-            <a class="btn btn-sm btn-warning" href="#">Login</a> &nbsp;
-            <a class="btn btn-sm btn-outline-secondary" href="#">Register</a>
+            {% if not user.is_authenticated %}
+            <a class="btn btn-sm btn-warning" href="{% url 'login' %}">Login</a> &nbsp;
+            <a class="btn btn-sm btn-outline-secondary" href="{% url 'register' %}">Register</a>
+           {% else %}
+            <div class="user-status">
+            <span>You are logged in as</span>
+            <strong>{{ user.username }}</strong>
+            </div>
+
+    <a class="btn btn-sm btn-warning ml-2" href="{% url 'logout' %}">
+        Logout
+    </a>
+{% endif %}
           </div>
         </div>
       </header>
